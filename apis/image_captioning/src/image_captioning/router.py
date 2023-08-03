@@ -1,12 +1,10 @@
 import torch
-
-from PIL import Image
-from fastapi import APIRouter, UploadFile, HTTPException
+from config import settings
+from fastapi import APIRouter, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
+from PIL import Image
 
 from .predictor import ImageCaptioner
-from config import settings
-
 
 router = APIRouter()
 

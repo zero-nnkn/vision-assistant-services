@@ -1,8 +1,8 @@
-import torch
-
-from PIL import Image
 from functools import lru_cache
-from transformers import ViTImageProcessor, VisionEncoderDecoderModel, AutoTokenizer
+
+import torch
+from PIL import Image
+from transformers import AutoTokenizer, VisionEncoderDecoderModel, ViTImageProcessor
 
 
 class ImageCaptioner:
@@ -23,9 +23,7 @@ class ImageCaptioner:
         )
 
     @lru_cache
-    def load_models(
-        self, model_path: str, processor_path: str, tokenizer_path: str
-    ) -> None:
+    def load_models(self, model_path: str, processor_path: str, tokenizer_path: str) -> None:
         """
         Load HuggingFace model, processor, and tokenizer from Model Hub or local.
         If the local path does not exist, it will search on the HuggingFace Hub

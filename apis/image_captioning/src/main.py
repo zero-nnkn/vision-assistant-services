@@ -1,10 +1,8 @@
 import uvicorn
-
+from config import settings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
-
-from config import settings
 from image_captioning.router import router
 
 app = FastAPI()

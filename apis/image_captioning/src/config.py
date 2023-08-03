@@ -1,8 +1,8 @@
 import os
+from pathlib import Path
 
 from pydantic import validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pathlib import Path
 
 CWD = Path(__file__)
 SERVICE_ROOT = str(CWD.parent.parent)
