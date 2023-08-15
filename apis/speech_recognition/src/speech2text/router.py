@@ -5,7 +5,6 @@ from fastapi.responses import JSONResponse
 
 from .service import Transcriber
 
-
 router = APIRouter()
 
 
