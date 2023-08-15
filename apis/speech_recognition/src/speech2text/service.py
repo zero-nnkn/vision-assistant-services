@@ -31,11 +31,11 @@ class Transcriber:
     ):
         """
         Transcribes an input file.
-        
+
         Args:
           audio: Path to the input file (or a file-like object), or the audio waveform.
           beam_size: Beam size to use for decoding.
-        
+
         Returns:
           A dictionary with the following structure:
             {

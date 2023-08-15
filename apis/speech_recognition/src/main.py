@@ -7,7 +7,6 @@ from config import settings
 from speech2text.router import init_transcripber
 from speech2text.router import router as speech2text_router
 
-
 app = FastAPI(title='Speech Recognition API')
 
 
@@ -36,7 +35,7 @@ async def startup_event():
     init_transcripber(
         model_size=settings.FASTER_WHISPER_MODEL,
         device=settings.FASTER_WHISPER_MODEL_DEVICE,
-        compute_type=settings.FASTER_WHISPER_MODEL_COMPUTE_TYPE
+        compute_type=settings.FASTER_WHISPER_MODEL_COMPUTE_TYPE,
     )
 
 
