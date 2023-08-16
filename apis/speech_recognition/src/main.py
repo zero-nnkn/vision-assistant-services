@@ -3,12 +3,12 @@ from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
+from speech2text.router import init_transcripber
 from speech2text.router import router as speech2text_router
 
 app = FastAPI(title='Speech Recognition API')
 
 
-origins = ['*']
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -19,7 +19,7 @@ app.add_middleware(
 
 
 @app.exception_handler(RequestValidationError)
-def validation_exception_handler(request: Request, exc: RequestValidationError):
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
     # Get the original 'detail' list of errors
     details = exc.errors()
     error_details = []
@@ -29,19 +29,29 @@ def validation_exception_handler(request: Request, exc: RequestValidationError):
     return JSONResponse(content={"message": error_details})
 
 
+@app.on_event("startup")
+async def startup_event():
+    init_transcripber(
+        model_size=settings.FASTER_WHISPER_MODEL,
+        device=settings.FASTER_WHISPER_MODEL_DEVICE,
+        compute_type=settings.FASTER_WHISPER_MODEL_COMPUTE_TYPE,
+    )
+
+
 @app.get('/', include_in_schema=False)
-def root() -> None:
+async def root() -> None:
     return RedirectResponse('/docs')
 
 
 @app.get('/health', status_code=status.HTTP_200_OK, tags=['health'])
-def perform_healthcheck() -> None:
+async def perform_healthcheck() -> None:
     return JSONResponse(content={'message': 'success'})
 
 
 app.include_router(speech2text_router, prefix='/speech2text')
 
 
+# Run API
 if __name__ == '__main__':
     import uvicorn
 

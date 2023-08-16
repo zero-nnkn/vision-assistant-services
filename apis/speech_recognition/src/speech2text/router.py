@@ -1,5 +1,4 @@
-import datetime
-import os
+import io
 
 from fastapi import APIRouter, File
 from fastapi.responses import JSONResponse
@@ -9,28 +8,27 @@ from .service import Transcriber
 router = APIRouter()
 
 
-transcripber = Transcriber(
-    model_size='small',
-    device='cpu',
-    compute_type='float32',
-)
+transcripber = None
+
+
+def init_transcripber(**kargs):
+    """
+    Initialize the transcriber as a singleton object.
+    Use at API startup.
+    """
+    global transcripber
+    if transcripber is None:
+        transcripber = Transcriber(**kargs)
 
 
 @router.post('/transcription/audio')
-def transcribe(audio_file: bytes = File()) -> JSONResponse:
-    """
-    The function transcribes an audio file and returns the transcripts in a JSON response.
-    """
-    audio_path = f'{datetime.datetime.now().strftime("%Y-%m-%d_%H%M-%S")}.mp3'
-    with open(audio_path, 'wb') as f:
-        f.write(audio_file)
+async def transcribe(audio_file: bytes = File()) -> JSONResponse:
+    audio_file = io.BytesIO(audio_file)
 
     try:
-        transcripts = transcripber.transcribe(audio_path, beam_size=5)
+        transcripts = transcripber.transcribe(audio_file, beam_size=5)
     except Exception:
         return JSONResponse(content={'message': 'transcribe error'})
-
-    os.remove(audio_path)
 
     return JSONResponse(
         content={
