@@ -14,7 +14,8 @@ predictor = None
 def init(settings):
     global predictor
     cls = getattr(sys.modules[__name__], settings.PREDICTOR_NAME)
-    predictor = cls()
+    args = eval(settings.PREDICTOR_ARGS)
+    predictor = cls(device=settings.DEVICE, **args)
 
 
 @router.post('/answer')
