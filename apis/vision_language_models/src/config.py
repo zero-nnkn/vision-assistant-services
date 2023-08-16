@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Dict, List
+from typing import List
 
 from pydantic_settings import BaseSettings
 
@@ -13,7 +13,9 @@ class Settings(BaseSettings):
     PORT: int
     CORS_ORIGINS: List[str]
     CORS_HEADERS: List[str]
+    DEVICE: str
     PREDICTOR_NAME: str
+    PREDICTOR_ARGS: str
 
     class Config:
         env_file = os.path.join(ROOT, '.env')
