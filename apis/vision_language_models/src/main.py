@@ -5,8 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
 from vqa import router as vqa_router
 
-vqa_router.init(settings)
-
 app = FastAPI(title='Vision Language Models API')
 
 origins = ['*']
@@ -17,6 +15,11 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
 )
+
+
+@app.on_event("startup")
+def startup_event():
+    vqa_router.init(settings)
 
 
 @app.exception_handler(RequestValidationError)
@@ -46,4 +49,11 @@ app.include_router(vqa_router.router, prefix='/vqa')
 if __name__ == '__main__':
     import uvicorn
 
-    uvicorn.run('main:app', host=settings.HOST, port=settings.PORT, reload=True)
+    print("Settings:")
+    for attr_name in dir(settings):
+        if not attr_name.startswith("_"):
+            attr_value = getattr(settings, attr_name)
+            if attr_name.isupper():
+                print(f"    {attr_name}: {attr_value}")
+
+    uvicorn.run('main:app', host=settings.HOST, port=settings.PORT)
