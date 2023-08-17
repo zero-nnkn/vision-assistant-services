@@ -26,8 +26,8 @@ async def transcribe(audio_file: bytes = File()) -> JSONResponse:
     The function transcribes an audio file and returns the transcripts as a JSON response.
 
     Args:
-      audio_file (bytes): The `audio_file` parameter is of type `bytes` and represents the audio file
-    that needs to be transcribed. It is expected to be passed as a file in the request body.
+      audio_file (bytes): audio file that needs to be transcribed.
+    It is expected to be passed as a file in the request body.
 
     Returns:
       A JSON response has the following structure:
