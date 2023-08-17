@@ -2,10 +2,12 @@ version: "3.8"
 
 services:
   speech_recognition:
-    build: ./apis/speech_recognition
+    container_name: speech_recognition
+    build: 
+      context: ./apis/speech_recognition
+      dockerfile: Dockerfile
     ports:
       - 8001:8001
     restart: unless-stopped
     # networks:
     #   - deploy_network
-    container_name: speech_recognition
