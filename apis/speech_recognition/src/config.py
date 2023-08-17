@@ -9,8 +9,8 @@ ROOT = str(FILE.parent.parent)
 
 class Settings(BaseSettings):
     # PROJECT INFORMATION
-    HOST: str
-    PORT: int
+    # HOST: str
+    # PORT: int
     CORS_ORIGINS: list[str]
     CORS_HEADERS: list[str]
 

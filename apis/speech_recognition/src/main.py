@@ -1,10 +1,10 @@
-from config import settings
+from src.config import settings
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
-from speech2text.router import init_transcripber
-from speech2text.router import router as speech2text_router
+from src.speech2text.router import init_transcripber
+from src.speech2text.router import router as speech2text_router
 
 app = FastAPI(title='Speech Recognition API')
 
@@ -14,7 +14,7 @@ app.add_middleware(
     allow_origins=settings.CORS_ORIGINS,
     allow_headers=settings.CORS_HEADERS,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=['*'],
 )
 
 
@@ -25,11 +25,11 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     error_details = []
 
     for error in details:
-        error_details.append({'error': error['msg'] + " " + str(error['loc'])})
-    return JSONResponse(content={"message": error_details})
+        error_details.append({'error': f"{error['msg']} {str(error['loc'])}"})
+    return JSONResponse(content={'message': error_details})
 
 
-@app.on_event("startup")
+@app.on_event('startup')
 async def startup_event():
     init_transcripber(
         model_size=settings.FASTER_WHISPER_MODEL,
@@ -52,7 +52,7 @@ app.include_router(speech2text_router, prefix='/speech2text')
 
 
 # Run API
-if __name__ == '__main__':
-    import uvicorn
+# if __name__ == '__main__':
+#     import uvicorn
 
-    uvicorn.run('main:app', host=settings.HOST, port=settings.PORT, reload=True)
+#     uvicorn.run('main:app', host=settings.HOST, port=settings.PORT, reload=True)
