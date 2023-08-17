@@ -1,0 +1,8 @@
+fastapi==0.101.1
+pydantic==2.1.1
+uvicorn==0.23.1
+python-dotenv==1.0.0
+pydantic_settings==2.0.2
+python-multipart==0.0.6
+
+TTS==0.14.3
