@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 TEST_PATH = Path(__file__).resolve().parent
 SAMPLES_PATH = TEST_PATH / 'samples'
 
@@ -11,7 +10,7 @@ def test_transcribe_audio(client):
     with open(audio_path, 'rb') as f:
         files = {'audio_file': ('audio.wav', f, 'audio/wav')}
         response = client.post(
-            '/speech2text/transcription/audio', 
+            '/speech2text/transcription/audio',
             headers={'accept': 'application/json'},
             files=files,
         )
@@ -19,7 +18,7 @@ def test_transcribe_audio(client):
     response_data = response.json()
 
     assert response_data.get('message') == 'success'
-    
+
     # Check the 'transcripts' field
     assert 'info' in response_data
     assert 'segments' in response_data
@@ -30,9 +29,7 @@ def test_transcribe_audio(client):
 def test_transcribe_error(client):
     files = {'audio_file': ('audio.wav', b'', 'audio/wav')}
     response = client.post(
-        '/speech2text/transcription/audio', 
-        headers={'accept': 'application/json'},
-        files=files
+        '/speech2text/transcription/audio', headers={'accept': 'application/json'}, files=files
     )
 
     assert response.status_code == 500

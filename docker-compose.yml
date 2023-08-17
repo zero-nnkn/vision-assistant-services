@@ -3,7 +3,7 @@ version: "3.8"
 services:
   speech_recognition:
     container_name: speech_recognition
-    build: 
+    build:
       context: ./apis/speech_recognition
       dockerfile: Dockerfile
     ports:

@@ -1,8 +1,8 @@
-from src.config import settings
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
+from src.config import settings
 from src.speech2text.router import init_transcripber
 from src.speech2text.router import router as speech2text_router
 

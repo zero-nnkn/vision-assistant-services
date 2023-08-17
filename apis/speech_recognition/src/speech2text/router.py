@@ -2,7 +2,6 @@ import io
 
 from fastapi import APIRouter, File, status
 from fastapi.responses import JSONResponse
-
 from src.speech2text.service import Transcriber
 
 router = APIRouter()
@@ -25,11 +24,11 @@ def init_transcripber(**kargs):
 async def transcribe(audio_file: bytes = File()) -> JSONResponse:
     """
     The function transcribes an audio file and returns the transcripts as a JSON response.
-    
+
     Args:
       audio_file (bytes): The `audio_file` parameter is of type `bytes` and represents the audio file
     that needs to be transcribed. It is expected to be passed as a file in the request body.
-    
+
     Returns:
       A JSON response has the following structure:
       {
@@ -50,7 +49,7 @@ async def transcribe(audio_file: bytes = File()) -> JSONResponse:
     except Exception:
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={'message': 'transcribe error'}
+            content={'message': 'transcribe error'},
         )
 
     return JSONResponse(
@@ -59,5 +58,5 @@ async def transcribe(audio_file: bytes = File()) -> JSONResponse:
             'message': 'success',
             'info': transcripts['info'],
             'segments': transcripts['segments'],
-        }
+        },
     )
