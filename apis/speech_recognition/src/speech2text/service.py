@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import BinaryIO, Union
+from typing import BinaryIO, Optional, Union
 
 import numpy as np
 from faster_whisper import WhisperModel
@@ -28,6 +28,7 @@ class Transcriber:
         self,
         audio: Union[str, BinaryIO, np.ndarray],
         beam_size: int = 5,
+        language: Optional[str] = None,
     ):
         """
         Transcribes an input file.
@@ -35,6 +36,7 @@ class Transcriber:
         Args:
           audio: Path to the input file (or a file-like object), or the audio waveform.
           beam_size: Beam size to use for decoding.
+          language: The language spoken in the audio (supported by Whisper).
 
         Returns:
           A dictionary with the following structure:
@@ -49,7 +51,7 @@ class Transcriber:
                 ],
             }
         """
-        segments, info = self.model.transcribe(audio, beam_size=beam_size)
+        segments, info = self.model.transcribe(audio, beam_size=beam_size, language=language)
         result = {
             'info': {
                 'language': info.language,

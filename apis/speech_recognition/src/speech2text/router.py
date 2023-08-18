@@ -45,7 +45,7 @@ async def transcribe(audio_file: bytes = File()) -> JSONResponse:
     audio_file = io.BytesIO(audio_file)
 
     try:
-        transcripts = transcripber.transcribe(audio_file, beam_size=5)
+        transcripts = transcripber.transcribe(audio_file, beam_size=5, language='en')
     except Exception:
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
