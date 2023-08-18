@@ -1,6 +1,6 @@
 from functools import lru_cache
 from TTS.api import TTS
-
+import torch
 
 class Transcriber:
     """
@@ -16,6 +16,9 @@ class Transcriber:
     def load_model(
         self, model_name: str = 'tts_models/en/ljspeech/vits', device: str = 'cpu'
     ):
+        if device == 'gpu' and not torch.cuda.is_available():
+            print("No CUDA device is available")
+            device = 'cpu'
         self.model = TTS(model_name, gpu = True if device == 'gpu' else False)
 
     def transcribe(
