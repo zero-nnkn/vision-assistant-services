@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
+from typing import List
 
 from pydantic_settings import BaseSettings
-from typing import List
 
 FILE = Path(__file__)
 ROOT = str(FILE.parent.parent)

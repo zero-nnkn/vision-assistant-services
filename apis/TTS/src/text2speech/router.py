@@ -2,13 +2,14 @@ import datetime
 import os
 
 from fastapi import APIRouter, File
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from .service import Transcriber
 
 router = APIRouter()
 
 transcripber = None
+
 
 def init_transcripber(**kargs):
     """
@@ -29,5 +30,5 @@ def transcribe(text: str = ""):
         transcripts = transcripber.transcribe(text)
     except Exception:
         return JSONResponse(content={'message': 'transcribe error'})
-    
+
     return StreamingResponse(transcripts, media_type='video/mp4')
