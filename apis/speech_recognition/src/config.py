@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     # PROJECT INFORMATION
     # HOST: str
     # PORT: int
-    CORS_ORIGINS: list[str]
-    CORS_HEADERS: list[str]
+    CORS_ORIGINS: list
+    CORS_HEADERS: list
 
     # ML INFORMATION
     FASTER_WHISPER_MODEL: str
@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     FASTER_WHISPER_MODEL_COMPUTE_TYPE: str
 
     class Config:
-        env_file = os.path.join(ROOT, '.env')
+        env_file = os.path.join(ROOT, ".env")
 
 
 settings = Settings()
