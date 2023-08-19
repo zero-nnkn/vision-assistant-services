@@ -2,10 +2,17 @@ version: "3.8"
 
 services:
   text2speech:
-    build: ./apis/text2speech
+    container_name: text2speech
+    build:
+      context: ./apis/text2speech
+      dockerfile: Dockerfile
     ports:
       - 8001:8001
     restart: unless-stopped
-    # networks:
-    #   - deploy_network
-    container_name: text2speech
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
