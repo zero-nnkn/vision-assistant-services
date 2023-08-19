@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 from text2speech.router import init_transcripber
 from text2speech.router import router as text2speech_router
 
-app = FastAPI(title='Speech Recognition API')
+app = FastAPI(title="Text-to-speech API")
 
 
 app.add_middleware(
@@ -25,7 +25,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     error_details = []
 
     for error in details:
-        error_details.append({'error': error['msg'] + " " + str(error['loc'])})
+        error_details.append({"error": error["msg"] + " " + str(error["loc"])})
     return JSONResponse(content={"message": error_details})
 
 
@@ -37,21 +37,21 @@ async def startup_event():
     )
 
 
-@app.get('/', include_in_schema=False)
+@app.get("/", include_in_schema=False)
 async def root() -> None:
-    return RedirectResponse('/docs')
+    return RedirectResponse("/docs")
 
 
-@app.get('/health', status_code=status.HTTP_200_OK, tags=['health'])
+@app.get("/health", status_code=status.HTTP_200_OK, tags=["health"])
 async def perform_healthcheck() -> None:
-    return JSONResponse(content={'message': 'success'})
+    return JSONResponse(content={"message": "success"})
 
 
-app.include_router(text2speech_router, prefix='/text2speech')
+app.include_router(text2speech_router, prefix="/text2speech")
 
 
 # Run API
-if __name__ == '__main__':
+if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run('main:app', host=settings.HOST, port=settings.PORT, reload=True)
+    uvicorn.run("main:app", host=settings.HOST, port=settings.PORT, reload=True)
