@@ -1,10 +1,9 @@
-import os
 from pathlib import Path
 
 from pydantic_settings import BaseSettings
 
 FILE = Path(__file__)
-ROOT = str(FILE.parent.parent)
+ROOT = FILE.parent.parent
 
 
 class Settings(BaseSettings):
@@ -20,7 +19,7 @@ class Settings(BaseSettings):
     FASTER_WHISPER_MODEL_COMPUTE_TYPE: str
 
     class Config:
-        env_file = os.path.join(ROOT, ".env")
+        env_file = ROOT / '.env'
 
 
 settings = Settings()
