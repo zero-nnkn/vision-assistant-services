@@ -1,10 +1,13 @@
-import datetime
-import os
-
-from fastapi import APIRouter, File
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi import APIRouter
+from fastapi.responses import FileResponse, JSONResponse
+from pydantic import BaseModel
 
 from .service import Transcriber
+
+
+class Item(BaseModel):
+    text: str
+
 
 router = APIRouter()
 
@@ -21,14 +24,14 @@ def init_transcripber(**kargs):
         transcripber = Transcriber(**kargs)
 
 
-@router.post('/transcription/text')
-def transcribe(text: str = ""):
+@router.post("/transcription/text")
+def transcribe(item: Item):
     """
-    The function transcribes a text and returns a audio in a Streaming response.
+    The function transcribes a text and returns a audio in a File response.
     """
     try:
-        transcripts = transcripber.transcribe(text)
+        transcripber.transcribe(item.text)
     except Exception:
-        return JSONResponse(content={'message': 'transcribe error'})
-
-    return StreamingResponse(transcripts, media_type='video/mp4')
+        return JSONResponse(status_code=500, content={"message": "Transcribe error"})
+    else:
+        return FileResponse("/tmp/output.wav", media_type="audio/mpeg", status_code=200)
