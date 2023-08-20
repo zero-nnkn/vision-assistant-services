@@ -9,7 +9,7 @@ VARIABLE_NAME=${VARIABLE_NAME:-app}
 export APP_MODULE=${APP_MODULE:-"$MODULE_NAME:$VARIABLE_NAME"}
 
 HOST=${HOST:-0.0.0.0}
-PORT=${PORT:-8001}
+PORT=${PORT:-8000}
 
 # Start Uvicorn with live reload
 exec uvicorn --reload --host $HOST --port $PORT "$APP_MODULE"
