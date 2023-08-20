@@ -6,7 +6,7 @@ from src.config import settings
 from src.speech2text.router import init_transcripber
 from src.speech2text.router import router as speech2text_router
 
-app = FastAPI(title='Speech Recognition API')
+app = FastAPI(title="Speech Recognition API")
 
 
 app.add_middleware(
@@ -14,7 +14,7 @@ app.add_middleware(
     allow_origins=settings.CORS_ORIGINS,
     allow_headers=settings.CORS_HEADERS,
     allow_credentials=True,
-    allow_methods=['*'],
+    allow_methods=["*"],
 )
 
 
@@ -25,30 +25,30 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     error_details = []
 
     for error in details:
-        error_details.append({'error': f"{error['msg']} {str(error['loc'])}"})
-    return JSONResponse(content={'message': error_details})
+        error_details.append({"error": f"{error['msg']} {str(error['loc'])}"})
+    return JSONResponse(content={"message": error_details})
 
 
-@app.on_event('startup')
+@app.on_event("startup")
 async def startup_event():
     init_transcripber(
-        model_size=settings.FASTER_WHISPER_MODEL,
+        model_path=settings.FASTER_WHISPER_MODEL,
         device=settings.FASTER_WHISPER_MODEL_DEVICE,
         compute_type=settings.FASTER_WHISPER_MODEL_COMPUTE_TYPE,
     )
 
 
-@app.get('/', include_in_schema=False)
+@app.get("/", include_in_schema=False)
 async def root() -> None:
-    return RedirectResponse('/docs')
+    return RedirectResponse("/docs")
 
 
-@app.get('/health', status_code=status.HTTP_200_OK, tags=['health'])
+@app.get("/health", status_code=status.HTTP_200_OK, tags=["health"])
 async def perform_healthcheck() -> None:
-    return JSONResponse(content={'message': 'success'})
+    return JSONResponse(content={"message": "success"})
 
 
-app.include_router(speech2text_router, prefix='/speech2text')
+app.include_router(speech2text_router, prefix="/speech2text")
 
 
 # Run API

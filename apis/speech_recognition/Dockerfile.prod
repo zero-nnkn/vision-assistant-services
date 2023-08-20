@@ -26,7 +26,10 @@ COPY . /proj
 WORKDIR /proj
 
 ENV HOST=0.0.0.0 \
-    PORT=8001
+    PORT=8000
+
+RUN mkdir ./model/faster-whisper-small/
+RUN python3 ./src/download_model.py
 
 RUN chmod +x /proj/scripts/start.sh
 

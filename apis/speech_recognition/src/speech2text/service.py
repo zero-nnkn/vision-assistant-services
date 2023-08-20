@@ -11,18 +11,19 @@ class Transcriber:
     """
 
     def __init__(
-        self, model_size: str = 'base', device: str = 'cpu', compute_type: str = 'float32'
+        self,
+        model_path: str = "faster-whisper-small",
+        device: str = "cpu",
+        compute_type: str = "float32",
     ):
         """
         Initialize the Whisper model.
         """
-        self._load_model(model_size=model_size, device=device, compute_type=compute_type)
+        self._load_model(model_path=model_path, device=device, compute_type=compute_type)
 
     @lru_cache(maxsize=1)
-    def _load_model(
-        self, model_size: str = 'base', device: str = 'cpu', compute_type: str = 'float32'
-    ):
-        self.model = WhisperModel(model_size, device=device, compute_type=compute_type)
+    def _load_model(self, model_path, device: str = "cpu", compute_type: str = "float32"):
+        self.model = WhisperModel(model_path, device=device, compute_type=compute_type)
 
     def transcribe(
         self,
@@ -53,12 +54,12 @@ class Transcriber:
         """
         segments, info = self.model.transcribe(audio, beam_size=beam_size, language=language)
         result = {
-            'info': {
-                'language': info.language,
-                'language_probability': info.language_probability,
+            "info": {
+                "language": info.language,
+                "language_probability": info.language_probability,
             },
-            'segments': [
-                {'start': segment.start, 'end': segment.end, 'text': segment.text}
+            "segments": [
+                {"start": segment.start, "end": segment.end, "text": segment.text}
                 for segment in segments
             ],
         }
