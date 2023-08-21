@@ -13,6 +13,11 @@ class Settings(BaseSettings):
     PORT: int
     CORS_ORIGINS: List[str]
     CORS_HEADERS: List[str]
+
+    S3_BUCKET_NAME: str
+    AWS_ACCESS_KEY_ID: str
+    AWS_SECRET_ACCESS_KEY: str
+
     DEVICE: str
     PREDICTOR_NAME: str
     PREDICTOR_ARGS: str

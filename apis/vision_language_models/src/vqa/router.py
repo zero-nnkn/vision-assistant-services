@@ -6,21 +6,36 @@ from fastapi.responses import JSONResponse
 from PIL import Image
 
 from .predictors import *
+from .utils import S3ObjectQuery
 
 router = APIRouter()
 predictor = None
+s3_object_query = None
 
 
 def init(settings):
-    global predictor
+    global predictor, s3_object_query
     cls = getattr(sys.modules[__name__], settings.PREDICTOR_NAME)
     args = eval(settings.PREDICTOR_ARGS)
     predictor = cls(device=settings.DEVICE, **args)
 
+    s3_object_query = S3ObjectQuery(
+        settings.S3_BUCKET_NAME,
+        settings.AWS_ACCESS_KEY_ID,
+        settings.AWS_SECRET_ACCESS_KEY,
+    )
+
 
 @router.post('/answer')
-def answer(image_file: bytes = File(), prompt: str = "") -> JSONResponse:
+def answer(
+    image_file: bytes = File(default=None),
+    image_filename: str = "",
+    prompt: str = "Describe this picture",
+) -> JSONResponse:
+    if image_file is None:
+        image_file = s3_object_query.query(image_filename)
     image = Image.open(BytesIO(image_file)).convert("RGB")
+
     try:
         output = predictor.answer(image, prompt)
     except Exception:
