@@ -1,10 +1,14 @@
+import os
 from argparse import Namespace
+from pathlib import Path
 
 import imagehash
 from minigpt4.common.config import Config
 from minigpt4.common.registry import registry
 from minigpt4.conversation.conversation import CONV_VISION, Chat
 from PIL import Image
+
+ROOT = Path(__file__).parent
 
 
 def hash_image(image):
@@ -24,7 +28,14 @@ class BasePredictor:
 
 
 class MiniGPT4(BasePredictor):
-    def __init__(self, device: str, cfg_path: str, max_new_tokens: int = 30, cache_size: int = 100):
+    def __init__(
+        self,
+        device: str,
+        cfg_path: str = os.path.join(ROOT, "minigpt4_configs/minigpt4_eval.yaml"),
+        max_new_tokens: int = 30,
+        cache_size: int = 100,
+        save_mem_mode=True,
+    ):
         super().__init__(device)
         self.max_new_tokens = max_new_tokens
         self.cache = {}
@@ -33,6 +44,7 @@ class MiniGPT4(BasePredictor):
 
         args = Namespace(cfg_path=cfg_path, options=None, gpu_id=0)
         cfg = Config(args)
+        cfg.model_cfg.low_resource = save_mem_mode
 
         model_config = cfg.model_cfg
         model_config.device_8bit = args.gpu_id
