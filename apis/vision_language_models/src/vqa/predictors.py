@@ -71,7 +71,7 @@ class MiniGPT4(BasePredictor):
                 del self.cache[removed_key]
         else:
             embeds, chat_state = self.cache[key]
-        return embeds[0], chat_state
+        return embeds[0], chat_state.copy()
 
     def answer(self, image: Image.Image, prompt: str) -> str:
         embed, chat_state = self.process_image(image)
@@ -84,4 +84,6 @@ class MiniGPT4(BasePredictor):
         )[0]
 
         stop_pos = answer.find(".")
-        return answer[:stop_pos]
+        if stop_pos == -1:
+            stop_pos = 0
+        return answer[:stop_pos].replace("<Img>", "")
