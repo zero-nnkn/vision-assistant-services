@@ -29,6 +29,8 @@ COPY . /proj
 
 WORKDIR /proj
 
+RUN python ./src/download_model.py
+
 ENV HOST=0.0.0.0 \
     PORT=8001
 
