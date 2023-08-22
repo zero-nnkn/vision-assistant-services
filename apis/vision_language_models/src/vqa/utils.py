@@ -3,6 +3,10 @@ from botocore.exceptions import ClientError
 
 
 class S3ObjectQuery:
+    """
+    Simple interface to retrieve files from a S3 bucket
+    """
+
     def __init__(self, bucket_name, aws_access_key_id, aws_secret_access_key):
         self.bucket_name = bucket_name
         self.s3 = boto3.resource(
@@ -10,7 +14,7 @@ class S3ObjectQuery:
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
         )
-        
+
     def query(self, filename):
         try:
             obj = self.s3.Object(self.bucket_name, filename)

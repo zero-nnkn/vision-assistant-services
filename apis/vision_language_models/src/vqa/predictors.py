@@ -12,6 +12,13 @@ ROOT = Path(__file__).parent
 
 
 def hash_image(image):
+    """
+    Compute hash value of image based on size and pixels
+    Args:
+        image: a PIL.Image.Image object to be hashed
+    Return:
+        A string which is the hash value of the image
+    """
     value = str(image.size)
     for method_name in ("average_hash", "phash", "dhash", "whash"):
         method = getattr(imagehash, method_name)
@@ -20,6 +27,10 @@ def hash_image(image):
 
 
 class BasePredictor:
+    """
+    Base class to implement Visual Question Answering predictors
+    """
+
     def __init__(self, device: str) -> None:
         self.device = device
 
@@ -36,6 +47,15 @@ class MiniGPT4(BasePredictor):
         cache_size: int = 100,
         save_mem_mode=True,
     ):
+        """
+        Initialize the MiniGPT-4 model
+        Args:
+            device: Device to store the model, can be "cpu", "cuda"
+            cfg_path: Path to the model configuration file, default: minigpt4_configs/minigpt4_eval.yaml
+            max_new_tokens: The maximum tokens to generate answer, default: 30
+            cache_size: Number of embedding tensors to be cached in runtime
+            save_mem_mode: Whether to use 8-bit mode to save GPU memory. The inference time is also decelerated
+        """
         super().__init__(device)
         self.max_new_tokens = max_new_tokens
         self.cache = {}
@@ -58,7 +78,19 @@ class MiniGPT4(BasePredictor):
         self.chat = Chat(model, vis_processor, device=self.device)
 
     def process_image(self, image: Image.Image):
+        """
+        Compute image's embedding which is fed to the LLM.
+        Args:
+            image: a PIL.Image.Image object
+        Return:
+            A tuple of:
+                + embedding tensor (torch.Tensor)
+                + chat state: State of the conversation understood by the LLM
+        """
+        # Compute hash value of the image
+        # If the image information is cached before, there's no need to process it again
         key = hash_image(image)
+
         if key not in self.cache:
             embeds = []
             chat_state = CONV_VISION.copy()
@@ -74,6 +106,14 @@ class MiniGPT4(BasePredictor):
         return embeds[0], chat_state.copy()
 
     def answer(self, image: Image.Image, prompt: str) -> str:
+        """
+        Answer the prompt based on image content
+        Args:
+            + image: a PIL.Image.Image object
+            + prompt: Prompt to retrieve information from the image
+        Return:
+            A string which is the answer
+        """
         embed, chat_state = self.process_image(image)
 
         self.chat.ask(prompt, chat_state)
@@ -83,6 +123,7 @@ class MiniGPT4(BasePredictor):
             max_new_tokens=self.max_new_tokens,
         )[0]
 
+        # Take the first sentence
         stop_pos = answer.find(".")
         if stop_pos == -1:
             stop_pos = 0

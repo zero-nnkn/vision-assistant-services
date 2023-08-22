@@ -14,6 +14,9 @@ s3_object_query = None
 
 
 def init(settings):
+    """
+    Initialize the VQA model and S3 service
+    """
     global predictor, s3_object_query
     cls = getattr(sys.modules[__name__], settings.PREDICTOR_NAME)
     args = eval(settings.PREDICTOR_ARGS)
@@ -32,11 +35,23 @@ def answer(
     image_filename: str = "",
     prompt: str = "Describe this picture",
 ) -> JSONResponse:
-    if image_file is None:
-        image_file = s3_object_query.query(image_filename)
-    image = Image.open(BytesIO(image_file)).convert("RGB")
-
+    """
+    Answer the prompt based on the image's content
+    Args:
+        image_file: image file in bytes
+        image_filename: filename of the image stored on S3, to be used if the image_file is not specified
+        prompt: Text prompt to retrieve information from the image
+    Return:
+        A response in json format.
+            + If successfully: {"message": "success", "answer": output}
+            + else if an error occurs: {"message": "VQA error"}
+    """
     try:
+        # Request file from S3 if image_file is not specified
+        if image_file is None:
+            image_file = s3_object_query.query(image_filename)
+
+        image = Image.open(BytesIO(image_file)).convert("RGB")
         output = predictor.answer(image, prompt)
     except Exception:
         import traceback
