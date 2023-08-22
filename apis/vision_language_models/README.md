@@ -45,7 +45,7 @@ AWS_SECRET_ACCESS_KEY="<to be filled>"
 
 # Model settings
 DEVICE="cuda"
-PREDICTOR_NAME="MiniGPT4"
+PREDICTOR_NAME="MiniGPT4" 
 PREDICTOR_ARGS="{'save_mem_mode': True}"
 ```
 
