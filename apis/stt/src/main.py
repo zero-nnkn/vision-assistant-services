@@ -6,7 +6,7 @@ from src.config import settings
 from src.speech2text.router import init_transcripber
 from src.speech2text.router import router as speech2text_router
 
-app = FastAPI(title="Speech Recognition API")
+app = FastAPI(title="Speech-to-Text API")
 
 
 app.add_middleware(

@@ -1,4 +1,4 @@
-# Speech Recognition API
+# Speech-to-Text API
 ## Local Development
 ### Install
 Create `.env` file. You can change model config here.
@@ -13,7 +13,7 @@ docker-compose up -d --build
 
 ### Test
 ```
-docker compose exec speech_recognition pytest
+docker compose exec speech-to-text pytest
 ```
 
 ## Production
