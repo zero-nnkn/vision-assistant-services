@@ -17,10 +17,14 @@ class Settings(BaseSettings):
 
     # ML INFORMATION
     MODEL_NAME: str
+    MODEL_PATH: str
+    CONFIG_PATH: str
+    VOCODER_PATH: str
+    VOCODER_CONFIG_PATH: str
     MODEL_DEVICE: str
 
     class Config:
-        env_file = os.path.join(ROOT, '.env')
+        env_file = os.path.join(ROOT, ".env")
 
 
 settings = Settings()

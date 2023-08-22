@@ -32,7 +32,10 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 @app.on_event("startup")
 async def startup_event():
     init_transcripber(
-        model_name=settings.MODEL_NAME,
+        model_path=settings.MODEL_PATH,
+        config_path=settings.CONFIG_PATH,
+        vocoder_path=settings.VOCODER_PATH if settings.VOCODER_PATH != "" else None,
+        vocoder_config=settings.VOCODER_CONFIG_PATH if settings.VOCODER_CONFIG_PATH != "" else None,
         device=settings.MODEL_DEVICE,
     )
 
