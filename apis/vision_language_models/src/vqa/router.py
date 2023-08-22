@@ -1,16 +1,16 @@
-import sys
 from io import BytesIO
 
 from fastapi import APIRouter, File
 from fastapi.responses import JSONResponse
 from PIL import Image
 
-from .predictors import *
+from .predictors import MiniGPT4
 from .utils import S3ObjectQuery
 
 router = APIRouter()
 predictor = None
 s3_object_query = None
+predictor_dict = {"MiniGPT4": MiniGPT4}
 
 
 def init(settings):
@@ -18,7 +18,7 @@ def init(settings):
     Initialize the VQA model and S3 service
     """
     global predictor, s3_object_query
-    cls = getattr(sys.modules[__name__], settings.PREDICTOR_NAME)
+    cls = predictor_dict[settings.PREDICTOR_NAME]
     args = eval(settings.PREDICTOR_ARGS)
     predictor = cls(device=settings.DEVICE, **args)
 
@@ -39,7 +39,8 @@ def answer(
     Answer the prompt based on the image's content
     Args:
         image_file: image file in bytes
-        image_filename: filename of the image stored on S3, to be used if the image_file is not specified
+        image_filename: filename of the image stored on S3
+            to be used if the image_file is not specified
         prompt: Text prompt to retrieve information from the image
     Return:
         A response in json format.

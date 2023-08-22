@@ -51,10 +51,13 @@ class MiniGPT4(BasePredictor):
         Initialize the MiniGPT-4 model
         Args:
             device: Device to store the model, can be "cpu", "cuda"
-            cfg_path: Path to the model configuration file, default: minigpt4_configs/minigpt4_eval.yaml
-            max_new_tokens: The maximum tokens to generate answer, default: 30
+            cfg_path: Path to the model configuration file
+                default: minigpt4_configs/minigpt4_eval.yaml
+            max_new_tokens: The maximum tokens to generate answer
+                default: 30
             cache_size: Number of embedding tensors to be cached in runtime
-            save_mem_mode: Whether to use 8-bit mode to save GPU memory. The inference time is also decelerated
+            save_mem_mode: Whether to use 8-bit mode to save GPU memory.
+                The inference time is also decelerated
         """
         super().__init__(device)
         self.max_new_tokens = max_new_tokens
