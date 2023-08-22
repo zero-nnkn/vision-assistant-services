@@ -6,7 +6,7 @@ from TTS.api import TTS
 
 class Transcriber:
     """
-    Transcriber class to transcribe audio file to text using pretrained Faster Whisper.
+    Transcriber class to transcribe text to audio file
     """
 
     def __init__(self, model_name: str = "tts_models/en/ljspeech/vits", device: str = "cpu"):
@@ -23,5 +23,11 @@ class Transcriber:
         self,
         text: str,
     ):
+        def __preprocess_input(s: str):
+            return s.strip()
+
+        text = __preprocess_input(text)
+        if not text:  # empty
+            raise ValueError("Empty text")
+
         self.model.tts_to_file(text=text, file_path="/tmp/output.wav")
-        return

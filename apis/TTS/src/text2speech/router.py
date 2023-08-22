@@ -31,6 +31,10 @@ def transcribe(item: Item):
     """
     try:
         transcripber.transcribe(item.text)
+    except ValueError:
+        return JSONResponse(
+            status_code=422, content={"message": "Invalid input text (e.g. empty text etc.)"}
+        )
     except Exception:
         return JSONResponse(status_code=500, content={"message": "Transcribe error"})
     else:
