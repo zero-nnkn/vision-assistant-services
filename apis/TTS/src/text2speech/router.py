@@ -28,6 +28,13 @@ def init_transcripber(**kargs):
 def transcribe(item: Item):
     """
     The function transcribes a text and returns a audio in a File response.
+
+    Args:
+      item (Item): An object contains information about the text that needs to be transcribed.
+
+    Returns:
+      A File response contains the audio file
+      or a JSON response if there is an error.
     """
     try:
         transcripber.transcribe(item.text)

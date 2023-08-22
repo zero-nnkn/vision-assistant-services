@@ -58,6 +58,13 @@ class Transcriber:
         self,
         text: str,
     ):
+        """
+        Convert the text to speech and save it as a WAV file.
+
+        Args:
+          text (str): string that represents the text that needs to be transcribed.
+        """
+
         def __preprocess_input(s: str):
             return s.strip()
 
