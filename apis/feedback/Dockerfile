@@ -1,6 +1,7 @@
-FROM public.ecr.aws/lambda/python:3.8 as api
+FROM public.ecr.aws/lambda/python:3.8
 
-ARG AWS_REGION TABLE_NAME
+ARG AWS_REGION
+ARG TABLE_NAME
 
 ENV AWS_REGION=${AWS_REGION} \
     TABLE_NAME=${TABLE_NAME}

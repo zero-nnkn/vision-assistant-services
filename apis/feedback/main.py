@@ -30,7 +30,7 @@ def lambda_handler(event, context):
     id = uuid.uuid4().hex
 
     try:
-        table = dynamodb.Table(os.environ.get("TABLE_NAME", "feedback-table"))
+        table = dynamodb.Table(os.environ.get("TABLE_NAME", "bootcamp-vision-feedback-table"))
         table.put_item(
             Item={
                 "feedback_id": id,
