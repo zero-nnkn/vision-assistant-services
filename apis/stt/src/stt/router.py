@@ -2,7 +2,7 @@ import io
 
 from fastapi import APIRouter, File, status
 from fastapi.responses import JSONResponse
-from src.speech2text.service import Transcriber
+from src.stt.service import Transcriber
 
 router = APIRouter()
 

@@ -3,8 +3,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
 from src.config import settings
-from src.speech2text.router import init_transcripber
-from src.speech2text.router import router as speech2text_router
+from src.stt.router import init_transcripber
+from src.stt.router import router as stt_router
 
 app = FastAPI(title="Speech-to-Text API")
 
@@ -48,7 +48,7 @@ async def perform_healthcheck() -> None:
     return JSONResponse(content={"message": "success"})
 
 
-app.include_router(speech2text_router, prefix="/speech2text")
+app.include_router(stt_router, prefix="/stt")
 
 
 # Run API

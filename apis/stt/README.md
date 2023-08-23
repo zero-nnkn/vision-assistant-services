@@ -13,7 +13,7 @@ docker-compose up -d --build
 
 ### Test
 ```
-docker compose exec speech-to-text pytest
+docker-compose exec speech-to-text pytest
 ```
 
 ## Production

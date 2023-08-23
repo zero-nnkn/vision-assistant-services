@@ -10,7 +10,7 @@ def test_transcribe_audio(client):
     with open(audio_path, 'rb') as f:
         files = {'audio_file': ('audio.wav', f, 'audio/wav')}
         response = client.post(
-            '/speech2text/transcription/audio',
+            '/stt/transcription/audio',
             headers={'accept': 'application/json'},
             files=files,
         )
@@ -29,7 +29,7 @@ def test_transcribe_audio(client):
 def test_transcribe_error(client):
     files = {'audio_file': ('audio.wav', b'', 'audio/wav')}
     response = client.post(
-        '/speech2text/transcription/audio', headers={'accept': 'application/json'}, files=files
+        '/stt/transcription/audio', headers={'accept': 'application/json'}, files=files
     )
 
     assert response.status_code == 500
