@@ -1,10 +1,10 @@
-from config import settings
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
-from text2speech.router import init_transcripber
-from text2speech.router import router as text2speech_router
+from src.config import settings
+from src.text2speech.router import init_transcripber
+from src.text2speech.router import router as text2speech_router
 
 app = FastAPI(title="Text-to-speech API")
 
@@ -51,10 +51,3 @@ async def perform_healthcheck() -> None:
 
 
 app.include_router(text2speech_router, prefix="/text2speech")
-
-
-# Run API
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run("main:app", host=settings.HOST, port=settings.PORT, reload=True)
