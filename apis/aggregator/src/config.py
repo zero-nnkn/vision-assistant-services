@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import List
 
 from pydantic_settings import BaseSettings
 
@@ -10,8 +11,8 @@ ROOT = str(FILE.parent.parent)
 class Settings(BaseSettings):
     HOST: str
     PORT: int
-    CORS_ORIGINS: list[str]
-    CORS_HEADERS: list[str]
+    CORS_ORIGINS: List[str]
+    CORS_HEADERS: List[str]
 
     STT_ENDPOINT: str
     VLM_ENDPOINT: str
