@@ -3,8 +3,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
 from src.config import settings
-from src.text2speech.router import init_transcripber
-from src.text2speech.router import router as text2speech_router
+from src.tts.router import init_transcripber
+from src.tts.router import router as tts_router
 
 app = FastAPI(title="Text-to-speech API")
 
@@ -50,4 +50,4 @@ async def perform_healthcheck() -> None:
     return JSONResponse(content={"message": "success"})
 
 
-app.include_router(text2speech_router, prefix="/text2speech")
+app.include_router(tts_router, prefix="/tts")

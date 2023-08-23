@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
-from src.text2speech.service import Transcriber
+from src.tts.service import Transcriber
 
 
 class Item(BaseModel):

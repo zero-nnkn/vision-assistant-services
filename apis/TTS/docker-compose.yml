@@ -1,8 +1,8 @@
 version: "3.8"
 
 services:
-  text2speech:
-    container_name: text2speech
+  text-to-speech:
+    container_name: text-to-speech
     build:
       context: .
       dockerfile: Dockerfile

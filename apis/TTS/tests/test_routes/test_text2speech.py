@@ -1,6 +1,6 @@
 def test_transcribe_string(client):
     response = client.post(
-        '/text2speech/transcription/text',
+        '/tts/transcription/text',
         headers={'accept': 'application/json'},
         data={
             'text': 'Hello, I am Vision Asistant, a smart assistant for visually impaired people'
@@ -13,7 +13,7 @@ def test_transcribe_string(client):
 
 def test_transcribe_number(client):
     response = client.post(
-        '/text2speech/transcription/text',
+        '/tts/transcription/text',
         headers={'accept': 'application/json'},
         data={'text': '1 2 3 4 5 6 7 8 9'},
     )
@@ -24,7 +24,7 @@ def test_transcribe_number(client):
 
 def test_transcribe_dot(client):
     response = client.post(
-        '/text2speech/transcription/text',
+        '/tts/transcription/text',
         headers={'accept': 'application/json'},
         data={'text': '...'},
     )
@@ -35,7 +35,7 @@ def test_transcribe_dot(client):
 
 def test_transcribe_empty(client):
     response = client.post(
-        '/text2speech/transcription/text',
+        '/tts/transcription/text',
         headers={'accept': 'application/json'},
         data={'text': '   '},
     )
