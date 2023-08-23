@@ -1,7 +1,7 @@
 # Aggregator API
-This service pushes the image to S3 bucket, and concurrently invoke other three services to process the image
+This service is an entrypoint for our system following the `Aggregator` design pattern. It receives clients' requests, invokes other microservices, aggregates their outputs, and responds to clients.
 ## Install with Docker
-Create an `.env` file, remember to fill in the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` variables
+Create a `.env` file, remember to fill in the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` variables
 ```bash
 $ cp .env.example .env
 ```
