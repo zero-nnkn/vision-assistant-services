@@ -5,12 +5,12 @@ Vision Assistant is an innovative and accessible application designed to empower
 
 ## Backend Key Features
 - **Image Understanding:** Vision Assistant employs advanced computer vision technology to analyze images and extract meaningful information from them.
-- **Natural Language Interaction:** Users can interact with the application using natural language queries, allowing them to ask questions about the content of the scenes/images in both speech-form and text-form.
-- **Detailed Response:** Vision Assistant provides detailed answer, describing the elements, objects, and more within the scenes.
-- **Feedback Collecting**: The application receives users' feedback, retrains model, improves user experience.
+- **Natural Language Interaction:** Users can interact with the application using natural language queries, allowing them to ask questions about the content of the scenes/images in both speech form and text form.
+- **Detailed Response:** Vision Assistant provides detailed answers, describing the elements, objects, and more within the scenes.
+- **Feedback Collecting**: The application receives users' feedback, retrains the model, and improves user experience.
 
 ## System Design
-The backend is built following the `Aggregator` microservices design pattern. The Aggregator Service works as an entrypoint, invokes functional services, aggregates outputs, and response to users.
+The backend is built following the `Aggregator` microservices design pattern. The Aggregator Service works as an entry point, invokes functional services, aggregates outputs, and responds to users.
 
 ![core](./docs/core.png)
 
@@ -27,15 +27,15 @@ For the sake of simplicity, we select the `Synchronous Interservice Communicatio
 ![sequence-diagram](./docs/sequence-diagram.png)
 
 ## Deployment
-The Vision Assistant backend is deployed on the AWS Cloud infrastructure, leveraging a combination of services to ensure scalability, reliability, and accesibility. The microservices are dockerized and orchestrated using AWS ECS with EC2 and Fargate launch types. Below is an overview of the deployment solution and the AWS services involved:
+The Vision Assistant backend is deployed on the AWS Cloud infrastructure, leveraging a combination of services to ensure scalability, reliability, and accessibility. The microservices are dockerized and orchestrated using AWS ECS with EC2 and Fargate launch types. Below is an overview of the deployment solution and the AWS services involved:
 
 ![deployment](./docs/deployment.png)
 
 ## Future Work
-- Our future endeavors will focus on further enhancing the VQA service, with particularly emphasis on optimizing the Vision-language model
-- **User-Centric Retraining:** we are dedicated to building a training platform that harnesses users' feedback effectively, allowing us to iteratively fine-tune the model based on real-world usage scenarios and user-generated questions.
+- Our future endeavors will focus on further enhancing the VQA service, with particular emphasis on optimizing the Vision-language model
+- **User-Centric Retraining:** We are dedicated to building a training platform that harnesses users' feedback effectively, allowing us to iteratively fine-tune the model based on real-world usage scenarios and user-generated questions.
 
 ![future-work](./docs/overall-architecture.png)
 
 ## Contributing
-As the project is made by multiple services, please follow the guid corresponding to the service you want to contribute to.
+As the project is done by multiple services, please follow the guide corresponding to the service you want to contribute to.
