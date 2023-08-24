@@ -14,13 +14,13 @@ class Settings(BaseSettings):
     CORS_ORIGINS: List[str]
     CORS_HEADERS: List[str]
 
-    S3_BUCKET_NAME: str
+    STT_ENDPOINT: str
+    VLM_ENDPOINT: str
+    TTS_ENDPOINT: str
+    BUCKET_NAME: str
+
     AWS_ACCESS_KEY_ID: str
     AWS_SECRET_ACCESS_KEY: str
-
-    DEVICE: str
-    PREDICTOR_NAME: str
-    PREDICTOR_ARGS: str
 
     class Config:
         env_file = os.path.join(ROOT, ".env")
