@@ -1,20 +1,19 @@
 # Speech-to-Text API
-## Local Development
-### Install
+
+## Install with Docker
 Create `.env` file. You can change model config here.
-```
+```bash
 cp .env.example .env
 ```
 
-Run with Docker: Use `Dockerfile`
-```
-docker-compose up -d --build
-```
-
-### Test
-```
-docker-compose exec speech-to-text pytest
+Build Docker image:
+```bash
+docker build -f Dockerfile.prod -t speech-to-text .
 ```
 
-## Production
-Use `Dockerfile.prod` instead of `Dockerfile` (change `docker-compose.yml` if you want run with Docker Compose).
+Note: If you want to run tests, use the `Dockerfile` and run `pytest` inside the running container.
+
+## Run the API
+```bash
+docker run -it --gpus all -p 8000:8000 speech-to-text
+```
